@@ -48,7 +48,7 @@ Material with different softness can be created by changing:
 
 Default voxel material:
 
-```
+```java
 final ControllableVoxel defaultMaterial = new ControllableVoxel();
 ```
 
@@ -59,7 +59,7 @@ Hard material example:
 * High SDS frequency
 * All the springs scaffoldings are enabled
 
-```
+```java
 final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
        Voxel.SIDE_LENGTH,
        Voxel.MASS_SIDE_LENGTH_RATIO,
@@ -85,7 +85,7 @@ Soft material example:
   - SIDE_EXTERNAL= <span style="color:blue">blue</span> SDS in figure
   - CENTRAL_CROSS = <span style="color:orange">orange</span> SDS in figure
 
-```
+```java
 final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
        Voxel.SIDE_LENGTH,
        Voxel.MASS_SIDE_LENGTH_RATIO,
@@ -126,7 +126,7 @@ public static <K> Grid<K> create(int w, int h, BiFunction<Integer, Integer, K> f
 
 We use this method to create a grid of booleans called structure:
 
-```
+```java
 int w = 7;
 int h = 4;
 
@@ -136,7 +136,7 @@ final Grid<Boolean> structure = Grid.create(w, h, (x, y) -> (x < 2) || (x > 5) |
 
 We create the robot body according to the structure, using different materials for the voxels:
 
-```
+```java
 Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (x, y) -> {
    if (structure.get(x, y)) {
        if ((y == 3) && (x < 6) && (x >0)) {
@@ -157,7 +157,7 @@ The sensing equipment for each voxel can be selected among a wide range of senso
 
 In this example all the voxels have an `AreaRatio` sensor, and the voxels of the bottom layer have also a `Touch` sensor:
 
-```
+```java
 Grid<SensingVoxel> sensingBody = Grid.create(w, h, (x, y) -> {
    if (structure.get(x, y)) {
        if (y == 0) {
@@ -183,14 +183,14 @@ Sensors:
 We define a robot mind as an implementation of the `Controller` interface.
 To do this we use the `TimeFunction` class, with its constructor:
 
-```
+```java
 public TimeFunctions(Grid<SerializableFunction<Double, Double>> functions)
 ```
 
 The controller is a different function of the time applied to each voxel.
 Specifically we consider a sine function with a different phase for each voxel:
 
-```
+```java
 Controller<ControllableVoxel> mind = new TimeFunctions(
        Grid.create(w, h, (x, y) -> (Double t) -> Math.sin(-2 * Math.PI * t + Math.PI * ((double) x / (double) w)))
 );
@@ -198,7 +198,7 @@ Controller<ControllableVoxel> mind = new TimeFunctions(
 
 `TimeFunction` has a public `control()` method, which is called by the simulator at each time step, and this applies to each voxel its corresponding signal:
 
-```
+```java
 public void control(double t, Grid<? extends ControllableVoxel> voxels) {
    Iterator var4 = voxels.iterator();
    while(var4.hasNext()) {
@@ -213,7 +213,7 @@ public void control(double t, Grid<? extends ControllableVoxel> voxels) {
 
 Building the robot:
 
-```
+```java
 Robot<ControllableVoxel> robot = new Robot<>(mind, body);
 ```
 
@@ -223,7 +223,7 @@ Here we consider a centralized controller, which is a controller that collects t
 First we create a `CentralizedSensing` object that stores inputs, outputs, and the controller function.
 Then we We build the `MultiLayerPerceptron` objectm with ReLU activation function, and no hidden layer:
 
-```
+```java
 CentralizedSensing<SensingVoxel> centralizedMind = new CentralizedSensing<>(SerializationUtils.clone(sensingBody));
 
 MultiLayerPerceptron mlp = new MultiLayerPerceptron(
@@ -236,7 +236,7 @@ MultiLayerPerceptron mlp = new MultiLayerPerceptron(
 
 Then we randomly sample the params of the MLP from a gaussian distribution, and finally we set the MLP as the controller function:
 
-```
+```java
 double[] ws = mlp.getParams();
 Random random = new Random();
 IntStream.range(0, ws.length).forEach(i -> ws[i] = random.nextGaussian());
@@ -246,7 +246,7 @@ centralizedMind.setFunction(mlp);
 
 Building the robot:
 
-```
+```java
 Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedMind, SerializationUtils.clone(sensingBody));
 ```
 
@@ -255,13 +255,13 @@ Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedMind, Serializatio
 Here we consider a centralized controller, which is a controller that collects the inputs from each voxel individually, and actuates each one according to the inputs and its params.
 First we create a `DistributedSensing` object that stores inputs, outputs, and the controller function.
 
-```
+```java
 DistributedSensing distributedMind = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
 ```
 
 Then we loop over each voxel, building a MLP for each of them, and sampling their params like we did for the centralized controller:
 
-```
+```java
 for (Grid.Entry<SensingVoxel> entry : sensingBody) {
    // create a MLP for each voxel
    MultiLayerPerceptron localMlp = new MultiLayerPerceptron(
@@ -281,7 +281,7 @@ for (Grid.Entry<SensingVoxel> entry : sensingBody) {
 
 Building the robot:
 
-```
+```java
 Robot<SensingVoxel> distributedRobot = new Robot<>(distributedMind, SerializationUtils.clone(sensingBody));
 ```
 
@@ -289,7 +289,7 @@ Robot<SensingVoxel> distributedRobot = new Robot<>(distributedMind, Serializatio
 
 We consider a locomotion task with the following constructor:
 
-```
+```java
 public Locomotion(double finalT, double[][] groundProfile, List<Locomotion.Metric> metrics, Settings settings) {
     this(finalT, groundProfile, groundProfile[0][1] + 1.0D, metrics, settings);
 }
@@ -301,7 +301,7 @@ This requires us to specify:
 * The metrics to collect (i.e. TRAVELED_X_DISTANCE)
 * The settings for the world initialization (we keep the default ones)
 
-```
+```java
 final Locomotion locomotion = new Locomotion(
     20,
     Locomotion.createTerrain("flat"),
@@ -314,13 +314,13 @@ final Locomotion locomotion = new Locomotion(
 
 Running a simulation with the given task, and printing the collected metrics:
 
-```
+```java
 locomotion.apply(robot).stream().forEach(System.out::println);
 ```
 
 ## Visualization
 
-```
+```java
 // this runs 2 threads: 
 ScheduledExecutorService uiExecutor = Executors.newScheduledThreadPool(2);
 ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
