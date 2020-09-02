@@ -27,7 +27,7 @@ Download and install [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/download
 
 # Voxel
 
-![2D voxel](/assets/images/tux.png)
+![2D voxel](/assets/voxel.png)
 
 Scaffoldings: 
 * 4 rigid bodies
@@ -116,7 +116,7 @@ Robots:
 
 Here we define a 2D **7x4** grid of voxels, and we create a biped robot like this:
 
-![Robot body](/assets/images/robot.png)
+![Robot body](/assets/robot.png)
 
 The `Grid.create()` method allows to create a 2D grid with a custom filling function:
 
