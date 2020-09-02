@@ -145,7 +145,7 @@ Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (
            return SerializationUtils.clone(softMaterialVoxel);
        }
    } else {
-       return null; // no voxel is placed here
+       return null;         // no voxel is placed here
    }
 });
 ```
@@ -267,7 +267,7 @@ for (Grid.Entry<SensingVoxel> entry : sensingBody) {
    MultiLayerPerceptron localMlp = new MultiLayerPerceptron(
            MultiLayerPerceptron.ActivationFunction.RELU,
            distributedMind.nOfInputs(entry.getX(), entry.getY()),
-           new int[0], // hidden layers size
+           new int[0],                  // hidden layers size
            distributedMind.nOfOutputs(entry.getX(), entry.getY())
    );
    // set random params for each MLP
