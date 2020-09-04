@@ -62,7 +62,7 @@ Hard material example:
 final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
        Voxel.SIDE_LENGTH,
        Voxel.MASS_SIDE_LENGTH_RATIO,
-       50d,                                // high frequency
+       50d,  // high frequency
        Voxel.SPRING_D,
        Voxel.MASS_LINEAR_DAMPING,
        Voxel.MASS_ANGULAR_DAMPING,
@@ -72,7 +72,7 @@ final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
        Voxel.LIMIT_CONTRACTION_FLAG,
        Voxel.MASS_COLLISION_FLAG,
        Voxel.AREA_RATIO_MAX_DELTA,
-       Voxel.SPRING_SCAFFOLDINGS,           // all the scaffoldings enabled
+       Voxel.SPRING_SCAFFOLDINGS, // all the scaffolding enabled
        ControllableVoxel.MAX_FORCE,
        ControllableVoxel.ForceMethod.DISTANCE
 );
@@ -88,7 +88,7 @@ Soft material example:
 final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
        Voxel.SIDE_LENGTH,
        Voxel.MASS_SIDE_LENGTH_RATIO,
-       5d,                                       // low frequency
+       5d, // low frequency
        Voxel.SPRING_D,
        Voxel.MASS_LINEAR_DAMPING,
        Voxel.MASS_ANGULAR_DAMPING,
@@ -99,7 +99,7 @@ final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
        Voxel.MASS_COLLISION_FLAG,
        Voxel.AREA_RATIO_MAX_DELTA,
        EnumSet.of(Voxel.SpringScaffolding.SIDE_EXTERNAL,
-       Voxel.SpringScaffolding.CENTRAL_CROSS),    // some scaffoldings enabled
+       Voxel.SpringScaffolding.CENTRAL_CROSS), // scaffolding partially enabled
        ControllableVoxel.MAX_FORCE,
        ControllableVoxel.ForceMethod.DISTANCE
 );
@@ -123,7 +123,7 @@ This is a **7x4** grid of voxels, that allows to create the following "biped" ro
 
 The `Grid.create()` method allows to create a 2D grid by using some filler function:
 
-```
+```java
 public static <K> Grid<K> create(int w, int h, BiFunction<Integer, Integer, K> fillerFunction)
 ```
 
@@ -143,13 +143,13 @@ The following body is created according to the structure, using 2 different voxe
 ```java
 Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (x, y) -> {
    if (structure.get(x, y)) {
-       if ((y == 3) && (x < 6) && (x >0)) {
+       if ((y == 3) && (x < 6) && (x > 0)) {
            return SerializationUtils.clone(hardMaterialVoxel);
        } else {
            return SerializationUtils.clone(softMaterialVoxel);
        }
    } else {
-       return null;         // no voxel is placed here
+       return null; // no voxel is placed here
    }
 });
 ```
@@ -170,7 +170,7 @@ Grid<SensingVoxel> sensingBody = Grid.create(w, h, (x, y) -> {
            return new SensingVoxel(List.of(new AreaRatio()));
        }
    } else {
-       return null;         // no voxel is placed here
+       return null; // no voxel is placed here
    }
 });
 ```
@@ -233,7 +233,7 @@ CentralizedSensing<SensingVoxel> centralizedMind = new CentralizedSensing<>(Seri
 MultiLayerPerceptron mlp = new MultiLayerPerceptron(
        MultiLayerPerceptron.ActivationFunction.RELU,
        centralizedMind.nOfInputs(),
-       new int[0],                  // hidden layers size
+       new int[0], // hidden layers
        centralizedMind.nOfOutputs()
 );
 ```
@@ -268,18 +268,15 @@ A MLP is defined for each voxel, with parameters randomly sampled from a gaussia
 
 ```java
 for (Grid.Entry<SensingVoxel> entry : sensingBody) {
-   // create a MLP for each voxel
    MultiLayerPerceptron localMlp = new MultiLayerPerceptron(
            MultiLayerPerceptron.ActivationFunction.RELU,
            distributedMind.nOfInputs(entry.getX(), entry.getY()),
-           new int[0],                  // hidden layers size
+           new int[0], // hidden layers
            distributedMind.nOfOutputs(entry.getX(), entry.getY())
    );
-   // set random params for each MLP
    double[] localWs = mlp.getParams();
    IntStream.range(0, localWs.length).forEach(i -> localWs[i] = random.nextGaussian());
    localMlp.setParams(localWs);
-   // update the distributed controller with the local MLP
    distributedMind.getFunctions().set(entry.getX(), entry.getY(), localMlp);
 }
 ```
@@ -328,16 +325,18 @@ locomotion.apply(robot).stream().forEach(System.out::println);
 It is possible to show the simulation as it is executed,through a `GridOnlineViewer`:
 
 ```java
-// this runs 2 threads: 
 ScheduledExecutorService uiExecutor = Executors.newScheduledThreadPool(2);
 ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-// this configure the viewer
 GridOnlineViewer gridOnlineViewer = new GridOnlineViewer(
        Grid.create(1, 1, "Simulation"),
        uiExecutor
 );
-// this sets the delay from the simulation to the viewer
-gridOnlineViewer.start(5);
+gridOnlineViewer.start(5); // delay from beginning of the simulation
+```
+
+And then an `GridEpisodeRunner` is used to run the simulations:
+
+```
 GridEpisodeRunner<Robot<?>> runner = new GridEpisodeRunner<>(
        Grid.create(1, 1, Pair.of("Robot", robot)),
        locomotion,
@@ -346,6 +345,3 @@ GridEpisodeRunner<Robot<?>> runner = new GridEpisodeRunner<>(
 );
 runner.run();
 ```
-
-
-
