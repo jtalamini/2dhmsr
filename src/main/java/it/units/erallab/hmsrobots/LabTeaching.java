@@ -1,4 +1,4 @@
-package it.units.erallab;
+package it.units.erallab.hmsrobots;
 
 import com.google.common.collect.Lists;
 import it.units.erallab.hmsrobots.core.controllers.*;
@@ -147,7 +147,7 @@ public class LabTeaching {
 
         // centralized mind
         // create an object holding inputs, outputs, and the controller function
-        CentralizedSensing<SensingVoxel> centralizedMind = new CentralizedSensing<>(SerializationUtils.clone(sensingBody));
+        CentralizedSensing centralizedMind = new CentralizedSensing(SerializationUtils.clone(sensingBody));
         // build the MLP architecture
         MultiLayerPerceptron mlp = new MultiLayerPerceptron(
                 MultiLayerPerceptron.ActivationFunction.RELU,
