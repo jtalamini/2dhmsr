@@ -16,7 +16,7 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
 git clone https://github.com/jtalamini/2dhmsr
 ```
 
-2. Install JRE:
+2. Install Java Runtime Environment (JRE):
 
 ```
 sudo apt install openjdk-9-jre
@@ -29,22 +29,21 @@ Download and install [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/download
 
 <img src="/assets/voxel.png" alt="voxel" width="300"/>
 
-Scaffoldings: 
+Configurable scaffolding: 
 * 4 rigid bodies
-* (up to) 18 spring-damping systems (SDS)
+* (up to) 18 Spring-Damping Systems (SDS)
 * 2 ropes (= upper bounds to the distance between 2 rigid bodies)
 
-Actuation modes:
+Actuation mode:
 - Force applied on the mass center along the direction connecting it to the voxel center. 
 - Area actuation (default mode) = instantaneously change the voxel area:
   - Allows compression/expansion
   - Takes into account other forces acting on the voxel
 
 Materials:
-
 Material with different softness can be created by changing:
-* Scaffolding
-* SDS frequency
+* Scaffolding (adding/removing SDSs)
+* SDSs frequency (the higher is the spring oscillation frequncy, the softer is the voxel)
 
 Default voxel material:
 
@@ -52,11 +51,11 @@ Default voxel material:
 final ControllableVoxel defaultMaterial = new ControllableVoxel();
 ```
 
-This defaultMaterial has low SDS frequency (8.0), and all the scaffoldings enabled.
-If we want to create custom materials we have to provide the desired parameters in the constructor.
+This defaultMaterial has low SDSs frequency `springF = 8d`, and `springScaffoldings = Voxel.SPRING_SCAFFOLDINGS`, that is all the scaffoldings are enabled.
+In order to create a custom material, the desired values have to be provided in their respective constructor arguments.
 
 Hard material example:
-* High SDS frequency
+* High SDSs frequency
 * All the springs scaffoldings are enabled
 
 ```java
@@ -80,10 +79,10 @@ final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
 ```
 
 Soft material example:
-- Lower SDS frequency
+- Lower SDSs frequency
 - Only some of the scaffoldings are enabled:
-  - SIDE_EXTERNAL= <span style="color:blue">blue</span> SDS in figure
-  - CENTRAL_CROSS = <span style="color:orange">orange</span> SDS in figure
+  - `SIDE_EXTERNAL` (<span style="color:blue">blue</span> SDSs in figure)
+  - `CENTRAL_CROSS` (<span style="color:orange">orange</span> SDSs in figure)
 
 ```java
 final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
@@ -108,23 +107,28 @@ final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
 
 # Robot
 
-Robots:
-* Body = voxels assembly; it can be actuated, and possibly sense the environment
-* Mind = controller that is responsible for actuating the voxels
+Robots = Body + Mind
+- Body = some voxels assembly that can be actuated:
+  - Non-sensing body
+  - Sensing body
+- Mind = some controller responsible for actuating its body:
+  - Centralized mind
+  - Distributed mind
 
 ## Body
 
-Here we define a 2D **7x4** grid of voxels, and we create a biped robot like this:
+This is a **7x4** grid of voxels, that allows to create the following "biped" robot:
 
 <img src="/assets/robot.png" alt="robot" width="300"/>
 
-The `Grid.create()` method allows to create a 2D grid with a custom filling function:
+The `Grid.create()` method allows to create a 2D grid by using some filler function:
 
 ```
 public static <K> Grid<K> create(int w, int h, BiFunction<Integer, Integer, K> fillerFunction)
 ```
 
-We use this method to create a grid of booleans called structure:
+This allows to create a grid of boolean values called *structure*.
+The structure is then used to create the robot body, by instantiating voxels only in the desired positions:
 
 ```java
 int w = 7;
@@ -134,7 +138,7 @@ final Grid<Boolean> structure = Grid.create(w, h, (x, y) -> (x < 2) || (x > 5) |
 ```
 ### Non-sensing Body
 
-We create the robot body according to the structure, using different materials for the voxels:
+The following body is created according to the structure, using 2 different voxel materials:
 
 ```java
 Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (x, y) -> {
@@ -152,10 +156,10 @@ Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (
 
 ### Sensing Body
 
-It is possible to create a robot with the ability to sense the environment.
+It is also possible to create a robot with the ability to sense the environment.
 The sensing equipment for each voxel can be selected among a wide range of sensors.
 
-In this example all the voxels have an `AreaRatio` sensor, and the voxels of the bottom layer have also a `Touch` sensor:
+In this example all the voxels have an `AreaRatio` sensor, and the voxels in the bottom layer of the body grid have also a `Touch` sensor:
 
 ```java
 Grid<SensingVoxel> sensingBody = Grid.create(w, h, (x, y) -> {
@@ -172,23 +176,23 @@ Grid<SensingVoxel> sensingBody = Grid.create(w, h, (x, y) -> {
 ```
 
 Sensors:
-* `AreaRatio`: returns the ratio between the belonging voxel current area and rest area.
-* `Touch`: indicates if the voxel is touching another object or not
+* `AreaRatio`: returns the ratio between the current area and rest area of its belonging voxel.
+* `Touch`: return true if its belonging voxel is touching another object (which is not part of the robot), otherwise return false.
 * ...
 
 ## Mind
 
-### Non-sensing Mind
+### Simple Mind
 
-We define a robot mind as an implementation of the `Controller` interface.
-To do this we use the `TimeFunction` class, with its constructor:
+The mind is an implementation of the `Controller` interface.
+A simple mind, based on a non-sensng body, can be defined using the `TimeFunction` constructor:
 
 ```java
 public TimeFunctions(Grid<SerializableFunction<Double, Double>> functions)
 ```
 
-The controller is a different function of the time applied to each voxel.
-Specifically we consider a sine function with a different phase for each voxel:
+In this simple mind a different function of time is applied to each voxel.
+Specifically the mind is a sine function with a different phase for each voxel:
 
 ```java
 Controller<ControllableVoxel> mind = new TimeFunctions(
@@ -196,7 +200,7 @@ Controller<ControllableVoxel> mind = new TimeFunctions(
 );
 ```
 
-`TimeFunction` has a public `control()` method, which is called by the simulator at each time step, and this applies to each voxel its corresponding signal:
+`TimeFunction` has a public `control()` method, which is called by the simulator at each time step, and that applies to each voxel the corresponding signal:
 
 ```java
 public void control(double t, Grid<? extends ControllableVoxel> voxels) {
@@ -219,9 +223,9 @@ Robot<ControllableVoxel> robot = new Robot<>(mind, body);
 
 ### Centralized Mind
 
-Here we consider a centralized controller, which is a controller that collects the inputs from all the voxels, and actuates them in a centralized fashion.
-First we create a `CentralizedSensing` object that stores inputs, outputs, and the controller function.
-Then we We build the `MultiLayerPerceptron` objectm with ReLU activation function, and no hidden layer:
+A centralized mind is a function that accepts inputs from all the voxels, and actuates them all in a centralized fashion.
+The `CentralizedSensing` object stores inputs, outputs, and the controller function to invoke.
+Specifically, the function to invoke is a `MultiLayerPerceptron` (MLP) with ReLU activation function, and no hidden layers:
 
 ```java
 CentralizedSensing<SensingVoxel> centralizedMind = new CentralizedSensing<>(SerializationUtils.clone(sensingBody));
@@ -234,7 +238,7 @@ MultiLayerPerceptron mlp = new MultiLayerPerceptron(
 );
 ```
 
-Then we randomly sample the params of the MLP from a gaussian distribution, and finally we set the MLP as the controller function:
+The MLP parameters are randomly sampled from a gaussian distribution, and finally we set the MLP as the controller function:
 
 ```java
 double[] ws = mlp.getParams();
@@ -252,14 +256,15 @@ Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedMind, Serializatio
 
 ### Distributed Mind
 
-Here we consider a centralized controller, which is a controller that collects the inputs from each voxel individually, and actuates each one according to the inputs and its params.
-First we create a `DistributedSensing` object that stores inputs, outputs, and the controller function.
+A distributed mind is a grid of functions, each of them accepting inputs from part of the body, and actuating it in a distributed fashion.
+The `DistributedSensing` object that stores inputs, outputs, and the grid of functions to invoke.
 
 ```java
 DistributedSensing distributedMind = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
 ```
 
-Then we loop over each voxel, building a MLP for each of them, and sampling their params like we did for the centralized controller:
+In this example each function is associated to a voxel of the body.
+A MLP is defined for each voxel, with parameters randomly sampled from a gaussian distribution:
 
 ```java
 for (Grid.Entry<SensingVoxel> entry : sensingBody) {
@@ -287,7 +292,7 @@ Robot<SensingVoxel> distributedRobot = new Robot<>(distributedMind, Serializatio
 
 ## Task
 
-We consider a locomotion task with the following constructor:
+A locomotion task is defined by the following constructor:
 
 ```java
 public Locomotion(double finalT, double[][] groundProfile, List<Locomotion.Metric> metrics, Settings settings) {
@@ -295,11 +300,11 @@ public Locomotion(double finalT, double[][] groundProfile, List<Locomotion.Metri
 }
 ```
 
-This requires us to specify:
-* Simulation length (i.e. 20 simulated seconds)
-* Type of terrain to create (i.e. flat ground)
-* The metrics to collect (i.e. TRAVELED_X_DISTANCE)
-* The settings for the world initialization (we keep the default ones)
+This constructor requires the user to specify:
+* `double finalT`: simulation length (i.e. 20 simulated seconds)
+* `double[][] groundProfile`: defined by 2D coordinates
+* `List<Locomotion.Metric> metrics`: which metrics to collect (i.e. TRAVELED_X_DISTANCE)
+* `Settings settings`: the physical settings for the world initialization
 
 ```java
 final Locomotion locomotion = new Locomotion(
@@ -308,7 +313,7 @@ final Locomotion locomotion = new Locomotion(
     Lists.newArrayList(
         Locomotion.Metric.TRAVELED_X_DISTANCE
     ),
-    new Settings()
+    new Settings() // default settings
 );
 ```
 
@@ -319,6 +324,8 @@ locomotion.apply(robot).stream().forEach(System.out::println);
 ```
 
 ## Visualization
+
+It is possible to show the simulation as it is executed,through a `GridOnlineViewer`:
 
 ```java
 // this runs 2 threads: 
