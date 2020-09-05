@@ -26,8 +26,6 @@ java --version
 
 4. Make sure the latest JDK version is used: *File > Project Structure > Project > Project SDK*
 
-This should be set to version 14.
-
 Note: The following code can be found in *src/main/java/it/units/erallab/hmsrobots/LabTeaching.java*.
 
 # Voxel
