@@ -10,13 +10,9 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
 [1]: https://arxiv.org/pdf/2001.08617.pdf
 
 # Installation
-1. Clone this repository:
 
-```
-git clone https://github.com/jtalamini/2dhmsr
-```
-
-2. Download the latest Java Development Kit from [here](https://www.oracle.com/java/technologies/javase-downloads.html).
+1. This project requires Java Development Kit (JDK) version 14.
+Download the latest JDK from [here](https://www.oracle.com/java/technologies/javase-downloads.html).
 
 Check the installed version of Java:
 
@@ -24,15 +20,15 @@ Check the installed version of Java:
 java --version
 ```
 
+2. Download and install [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/download).
 
-3. Download and install [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/download).
-4. From IntelliJ main menu browse to: *File > New > Project From Existing Sources*
+3. From IntelliJ main menu navigate to: *File > New Project from Version Control > Git* and enter URL: https://github.com/jtalamini/2dhmsr
 
-and select the *pom.xml* file inside the repository.
-
-From inside the project view make sure the latest version is used: *File > Project Structure > Project > Project SDK*
+4. Make sure the latest JDK version is used: *File > Project Structure > Project > Project SDK*
 
 This should be set to version 14.
+
+Note: The following code can be found in *src/main/java/it/units/erallab/hmsrobots/LabTeaching.java*.
 
 # Voxel
 
