@@ -26,15 +26,11 @@ java --version
 
 
 3. Download and install [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/download).
-4. From IntelliJ main menu browse to: 
-
-*File > New > Project From Existing Sources*
+4. From IntelliJ main menu browse to: *File > New > Project From Existing Sources*
 
 and select the *pom.xml* file inside the repository.
 
-From inside the project view make sure the latest version is used:
-
-*File > Project Structure > Project > Project SDK*
+From inside the project view make sure the latest version is used: *File > Project Structure > Project > Project SDK*
 
 This should be set to version 14.
 
