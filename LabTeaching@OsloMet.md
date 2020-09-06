@@ -43,10 +43,9 @@ Actuation mode:
   - Allows compression/expansion
   - Takes into account other forces acting on the voxel
 
-Materials:
-Material with different softness can be created by changing:
+Materials with different softness can be created by changing:
 * Scaffolding (adding/removing SDSs)
-* SDSs frequency (the higher is the spring oscillation frequncy, the softer is the voxel)
+* SDSs frequency (the higher is the spring oscillation frequncy, the softer is the voxel material)
 
 Default voxel material:
 
