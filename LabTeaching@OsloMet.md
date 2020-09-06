@@ -54,7 +54,7 @@ final ControllableVoxel defaultMaterial = new ControllableVoxel();
 ```
 
 This defaultMaterial has low SDSs frequency `springF = 8d`, and `springScaffoldings = Voxel.SPRING_SCAFFOLDINGS`, that is all the scaffoldings are enabled.
-In order to create a custom material, the desired values have to be provided in their respective constructor arguments.
+Custom materials can be created by passing different values in the voxel constructor arguments.
 
 Hard material example:
 * High SDSs frequency
@@ -81,7 +81,7 @@ final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
 ```
 
 Soft material example:
-- Lower SDSs frequency
+- Low SDSs frequency
 - Only some of the scaffoldings are enabled:
   - `SIDE_EXTERNAL` (<span style="color:blue">blue</span> SDSs in figure)
   - `CENTRAL_CROSS` (<span style="color:orange">orange</span> SDSs in figure)
