@@ -24,7 +24,7 @@ java --version
 
 3. From IntelliJ main menu navigate to: *File > New Project from Version Control > Git* and enter URL: https://github.com/jtalamini/2dhmsr
 
-4. Make sure the latest JDK version is used: *File > Project Structure > Project > Project SDK*
+4. Make sure the latest JDK version is used in the project: *File > Project Structure > Project > Project SDK*
 
 Note: The following code can be found in *src/main/java/it/units/erallab/hmsrobots/LabTeaching.java*.
 
@@ -32,10 +32,10 @@ Note: The following code can be found in *src/main/java/it/units/erallab/hmsrobo
 
 <img src="/assets/voxel.png" alt="voxel" width="300"/>
 
-Configurable scaffolding: 
+Physical voxel: 
 * 4 rigid bodies
-* (up to) 18 Spring-Damping Systems (SDS)
-* 2 ropes (= upper bounds to the distance between 2 rigid bodies)
+* (up to) 18 Spring-Damping Systems (SDS) (= configurable scaffolding)
+* (up to) 4 ropes (= upper bounds to the distance between rigid bodies)
 
 Actuation mode:
 - Force applied on the mass center along the direction connecting it to the voxel center. 
@@ -72,7 +72,7 @@ final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
        Voxel.FRICTION,
        Voxel.RESTITUTION,
        Voxel.MASS,
-       Voxel.LIMIT_CONTRACTION_FLAG,
+       Voxel.LIMIT_CONTRACTION_FLAG, // the ropes are enabled
        Voxel.MASS_COLLISION_FLAG,
        Voxel.AREA_RATIO_MAX_DELTA,
        Voxel.SPRING_SCAFFOLDINGS, // all the scaffolding enabled
@@ -98,7 +98,7 @@ final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
        Voxel.FRICTION,
        Voxel.RESTITUTION,
        Voxel.MASS,
-       Voxel.LIMIT_CONTRACTION_FLAG,
+       Voxel.LIMIT_CONTRACTION_FLAG, // the ropes are enabled
        Voxel.MASS_COLLISION_FLAG,
        Voxel.AREA_RATIO_MAX_DELTA,
        EnumSet.of(Voxel.SpringScaffolding.SIDE_EXTERNAL,
@@ -120,7 +120,7 @@ Robots = Body + Mind
 
 ## Body
 
-This is a **7x4** grid of voxels, that allows to create the following "biped" robot:
+This is a **7x4** grid of voxel, used to create the following "biped" robot:
 
 <img src="/assets/robot.png" alt="robot" width="300"/>
 
