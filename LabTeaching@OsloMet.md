@@ -331,7 +331,12 @@ ScheduledExecutorService uiExecutor = Executors.newScheduledThreadPool(2);
 ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 GridOnlineViewer gridOnlineViewer = new GridOnlineViewer(
        Grid.create(1, 1, "Simulation"),
-       uiExecutor
+       uiExecutor,
+       GraphicsDrawer.build().setConfigurable("drawers", List.of(
+          it.units.erallab.hmsrobots.viewers.drawers.Robot.build(),
+          it.units.erallab.hmsrobots.viewers.drawers.Voxel.build(),
+          it.units.erallab.hmsrobots.viewers.drawers.Ground.build()
+       ))
 );
 gridOnlineViewer.start(5); // delay from beginning of the simulation
 ```
