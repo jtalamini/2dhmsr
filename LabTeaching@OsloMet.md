@@ -355,9 +355,7 @@ runner.run();
 
 ## Examples
 
-Centralized MLP optimized for lowering the energy consumption over time:
-
-<a href="efficiency-capriolo.mp4" title="Link Title"><img alt="Alternate Text" /></a>
+[![Multiple Controllers Evolution](https://img.youtube.com/vi/y6nRjabuiDc/0.jpg)](https://www.youtube.com/watch?v=y6nRjabuiDc&ab_channel=EricMedvet "Example1")
 
 
 
