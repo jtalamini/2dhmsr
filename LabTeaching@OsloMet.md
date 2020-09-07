@@ -300,9 +300,9 @@ public Locomotion(double finalT, double[][] groundProfile, List<Locomotion.Metri
 ```
 
 This constructor requires the user to specify:
-* `double finalT`: simulation length (i.e. 20 simulated seconds)
-* `double[][] groundProfile`: defined by 2D coordinates
-* `List<Locomotion.Metric> metrics`: which metrics to collect (i.e. TRAVELED_X_DISTANCE)
+* `double finalT`: the simulation length (i.e. 20 simulated seconds)
+* `double[][] groundProfile`: the ground shape, defined by its 2D coordinates
+* `List<Locomotion.Metric> metrics`: the metrics to collect (i.e. TRAVELED_X_DISTANCE)
 * `Settings settings`: the physical settings for the world initialization
 
 ```java
@@ -338,7 +338,7 @@ gridOnlineViewer.start(5); // delay from beginning of the simulation
 
 And then an `GridEpisodeRunner` is used to run the simulations:
 
-```
+```java
 GridEpisodeRunner<Robot<?>> runner = new GridEpisodeRunner<>(
        Grid.create(1, 1, Pair.of("Robot", robot)),
        locomotion,
