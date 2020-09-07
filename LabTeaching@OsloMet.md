@@ -355,8 +355,24 @@ runner.run();
 
 ## Examples
 
+### Mind Optimization
+
+In the following example the body of the robot is fixed, and the brain is optimized for a locomotion task using respectively a centralized MLP, a distributed MLP, and phase controller (columns from left to right).
+Each row shows the best solution found at some point during the optimization of the 3 brains:
+
 [![Multiple Controllers Evolution](https://img.youtube.com/vi/y6nRjabuiDc/0.jpg)](https://www.youtube.com/watch?v=y6nRjabuiDc&ab_channel=EricMedvet "Example1")
 
+### Sensing vs Non-Sensing Behaviours
 
+As in the previous example the brain of a robot is optimized for locomotion using the same 3 brains.
+It can be seen here that the centralized brain, provided with Touch sensors, (left column) has developed some interesting jumping behaviour.
+This is not necessarily the best strategy for solving the task, but radically different from the behaviour of the phase controller (right column):
 
+[![Multiple Controllers Evolution](https://img.youtube.com/vi/iHCW3jM41D0/0.jpg)](https://www.youtube.com/watch?v=iHCW3jM41D0&ab_channel=EricMedvet "Example2")
+
+### Body Optimization
+
+In the following example the robot body is optimized for a locomotion task:
+
+[![Multiple Controllers Evolution](https://img.youtube.com/vi/Zs_Q93uEBxs/0.jpg)](https://www.youtube.com/watch?v=Zs_Q93uEBxs&ab_channel=EricMedvet "Example3")
 
