@@ -187,7 +187,7 @@ Sensors:
 ### Simple Brain
 
 The brain is an implementation of the `Controller` interface.
-A simple brain, based on a non-sensng body, can be defined using the `TimeFunction` constructor:
+A simple brain, based on a non-sensing body, can be defined using the `TimeFunction` constructor:
 
 ```java
 public TimeFunctions(Grid<SerializableFunction<Double, Double>> functions)
@@ -352,3 +352,13 @@ GridEpisodeRunner<Robot<?>> runner = new GridEpisodeRunner<>(
 );
 runner.run();
 ```
+
+## Examples
+
+Centralized MLP optimized for lowering the energy consumption over time:
+
+<a href="efficiency-capriolo.mp4" title="Link Title"><img alt="Alternate Text" /></a>
+
+
+
+
