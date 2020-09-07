@@ -219,7 +219,12 @@ public class LabTeaching {
         // configure the viewer
         GridOnlineViewer gridOnlineViewer = new GridOnlineViewer(
                 Grid.create(1, 1, "Simulation"),
-                uiExecutor
+                uiExecutor,
+                GraphicsDrawer.build().setConfigurable("drawers", List.of(
+                    it.units.erallab.hmsrobots.viewers.drawers.Robot.build(),
+                    it.units.erallab.hmsrobots.viewers.drawers.Voxel.build(),
+                    it.units.erallab.hmsrobots.viewers.drawers.Ground.build()
+                ))
         );
         // set the delay from the simulation to the viewer
         gridOnlineViewer.start(5);
