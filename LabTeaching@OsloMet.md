@@ -38,8 +38,8 @@ Physical voxel:
 * (up to) 4 ropes (= upper bounds to the distance between rigid bodies)
 
 Actuation mode:
-- Force applied on the mass center along the direction connecting it to the voxel center. 
-- Area actuation (default mode) = instantaneously change the voxel area:
+- Force applied on the mass center along the direction connecting it to the voxel center
+- Springs rest length (default mode)
   - Allows compression/expansion
   - Takes into account other forces acting on the voxel
 
@@ -64,7 +64,7 @@ Hard material example:
 final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
        Voxel.SIDE_LENGTH,
        Voxel.MASS_SIDE_LENGTH_RATIO,
-       50d,  // high frequency
+       50d, // high frequency
        Voxel.SPRING_D,
        Voxel.MASS_LINEAR_DAMPING,
        Voxel.MASS_ANGULAR_DAMPING,
@@ -76,7 +76,7 @@ final ControllableVoxel hardMaterialVoxel = new ControllableVoxel(
        Voxel.AREA_RATIO_MAX_DELTA,
        Voxel.SPRING_SCAFFOLDINGS, // all the scaffolding enabled
        ControllableVoxel.MAX_FORCE,
-       ControllableVoxel.ForceMethod.DISTANCE
+       ControllableVoxel.ForceMethod.DISTANCE // spring rest length mode
 );
 ```
 
@@ -103,19 +103,19 @@ final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
        EnumSet.of(Voxel.SpringScaffolding.SIDE_EXTERNAL,
        Voxel.SpringScaffolding.CENTRAL_CROSS), // scaffolding partially enabled
        ControllableVoxel.MAX_FORCE,
-       ControllableVoxel.ForceMethod.DISTANCE
+       ControllableVoxel.ForceMethod.DISTANCE // spring rest length mode
 );
 ```
 
 # Robot
 
-Robots = Body + Mind
+Robots = Body + Brain
 - Body = some voxels assembly that can be actuated:
   - Non-sensing body
   - Sensing body
-- Mind = some controller responsible for actuating its body:
-  - Centralized mind
-  - Distributed mind
+- Brain = some controller responsible for actuating its body:
+  - Centralized brain
+  - Distributed brain
 
 ## Body
 
@@ -182,22 +182,22 @@ Sensors:
 * `Touch`: return true if its belonging voxel is touching another object (which is not part of the robot), otherwise return false.
 * ...
 
-## Mind
+## Brain
 
-### Simple Mind
+### Simple Brain
 
-The mind is an implementation of the `Controller` interface.
-A simple mind, based on a non-sensng body, can be defined using the `TimeFunction` constructor:
+The brain is an implementation of the `Controller` interface.
+A simple brain, based on a non-sensng body, can be defined using the `TimeFunction` constructor:
 
 ```java
 public TimeFunctions(Grid<SerializableFunction<Double, Double>> functions)
 ```
 
-In this simple mind a different function of time is applied to each voxel.
-Specifically the mind is a sine function with a different phase for each voxel:
+In this simple brain a different function of time is applied to each voxel.
+Specifically the brain is a sine function with a different phase for each voxel:
 
 ```java
-Controller<ControllableVoxel> mind = new TimeFunctions(
+Controller<ControllableVoxel> brain = new TimeFunctions(
        Grid.create(w, h, (x, y) -> (Double t) -> Math.sin(-2 * Math.PI * t + Math.PI * ((double) x / (double) w)))
 );
 ```
@@ -220,23 +220,23 @@ public void control(double t, Grid<? extends ControllableVoxel> voxels) {
 Building the robot:
 
 ```java
-Robot<ControllableVoxel> robot = new Robot<>(mind, body);
+Robot<ControllableVoxel> robot = new Robot<>(brain, body);
 ```
 
-### Centralized Mind
+### Centralized Brain
 
-A centralized mind is a function that accepts inputs from all the voxels, and actuates them all in a centralized fashion.
+A centralized brain is a function that accepts inputs from all the voxels, and actuates them all in a centralized fashion.
 The `CentralizedSensing` object stores inputs, outputs, and the controller function to invoke.
 Specifically, the function to invoke is a `MultiLayerPerceptron` (MLP) with ReLU activation function, and no hidden layers:
 
 ```java
-CentralizedSensing<SensingVoxel> centralizedMind = new CentralizedSensing<>(SerializationUtils.clone(sensingBody));
+CentralizedSensing<SensingVoxel> centralizedBrain = new CentralizedSensing<>(SerializationUtils.clone(sensingBody));
 
 MultiLayerPerceptron mlp = new MultiLayerPerceptron(
        MultiLayerPerceptron.ActivationFunction.RELU,
-       centralizedMind.nOfInputs(),
+       centralizedBrain.nOfInputs(),
        new int[0], // hidden layers
-       centralizedMind.nOfOutputs()
+       centralizedBrain.nOfOutputs()
 );
 ```
 
@@ -247,22 +247,22 @@ double[] ws = mlp.getParams();
 Random random = new Random();
 IntStream.range(0, ws.length).forEach(i -> ws[i] = random.nextGaussian());
 mlp.setParams(ws);
-centralizedMind.setFunction(mlp);
+centralizedBrain.setFunction(mlp);
 ```
 
 Building the robot:
 
 ```java
-Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedMind, SerializationUtils.clone(sensingBody));
+Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedBrain, SerializationUtils.clone(sensingBody));
 ```
 
-### Distributed Mind
+### Distributed Brain
 
-A distributed mind is a grid of functions, each of them accepting inputs from part of the body, and actuating it in a distributed fashion.
+A distributed brain is a grid of functions, each of them accepting inputs from part of the body, and actuating it in a distributed fashion.
 The `DistributedSensing` object that stores inputs, outputs, and the grid of functions to invoke.
 
 ```java
-DistributedSensing distributedMind = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
+DistributedSensing distributedBrain = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
 ```
 
 In this example each function is associated to a voxel of the body.
@@ -272,21 +272,21 @@ A MLP is defined for each voxel, with parameters randomly sampled from a gaussia
 for (Grid.Entry<SensingVoxel> entry : sensingBody) {
    MultiLayerPerceptron localMlp = new MultiLayerPerceptron(
            MultiLayerPerceptron.ActivationFunction.RELU,
-           distributedMind.nOfInputs(entry.getX(), entry.getY()),
+           distributedBrain.nOfInputs(entry.getX(), entry.getY()),
            new int[0], // hidden layers
-           distributedMind.nOfOutputs(entry.getX(), entry.getY())
+           distributedBrain.nOfOutputs(entry.getX(), entry.getY())
    );
    double[] localWs = mlp.getParams();
    IntStream.range(0, localWs.length).forEach(i -> localWs[i] = random.nextGaussian());
    localMlp.setParams(localWs);
-   distributedMind.getFunctions().set(entry.getX(), entry.getY(), localMlp);
+   distributedBrain.getFunctions().set(entry.getX(), entry.getY(), localMlp);
 }
 ```
 
 Building the robot:
 
 ```java
-Robot<SensingVoxel> distributedRobot = new Robot<>(distributedMind, SerializationUtils.clone(sensingBody));
+Robot<SensingVoxel> distributedRobot = new Robot<>(distributedBrain, SerializationUtils.clone(sensingBody));
 ```
 
 ## Task
