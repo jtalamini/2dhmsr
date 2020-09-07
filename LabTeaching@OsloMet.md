@@ -193,8 +193,8 @@ A simple brain, based on a non-sensing body, can be defined using the `TimeFunct
 public TimeFunctions(Grid<SerializableFunction<Double, Double>> functions)
 ```
 
-In this simple brain a different function of time is applied to each voxel.
-Specifically the brain is a sine function with a different phase for each voxel:
+In this example a function of time is applied to each voxel.
+Specifically the brain actuates each voxel using a sine function with a different phase:
 
 ```java
 Controller<ControllableVoxel> brain = new TimeFunctions(
