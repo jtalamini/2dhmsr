@@ -7,6 +7,7 @@ import it.units.erallab.hmsrobots.core.sensors.AreaRatio;
 import it.units.erallab.hmsrobots.core.sensors.Touch;
 import it.units.erallab.hmsrobots.tasks.Locomotion;
 import it.units.erallab.hmsrobots.util.Grid;
+import it.units.erallab.hmsrobots.viewers.GraphicsDrawer;
 import it.units.erallab.hmsrobots.viewers.GridEpisodeRunner;
 import it.units.erallab.hmsrobots.viewers.GridOnlineViewer;
 import org.apache.commons.lang3.SerializationUtils;
@@ -76,37 +77,16 @@ public class LabTeaching {
         ##################
         */
 
-        int w = 7;
-        int h = 4;
+        int w = 20;
+        int h = 5;
 
         // the body structure
-        final Grid<Boolean> structure = Grid.create(w, h, (x, y) -> (x < 2) || (x > 5) || (y > 0));
-
-
-        // other examples of how to create grids:
-
-        // 1. it is possible to define a grid by passing an array of elements
-        Grid<Integer> grid = new Grid<>(w, h,  new Integer[]{1,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0});
-
-        // 2. it is possible to define a grid from an existing grid and a transformation function
-        final Grid<Boolean> grid2 = Grid.create(grid, b -> b == 1);
-
-        // 3. it is possible to define a grid with arbitrary function body
-        Grid<Boolean> grid3 = Grid.create(w, h, (x, y) -> {
-            if (x == 0) {
-                return true;
-            }
-            if (y == 0) {
-                return true;
-            }
-            return false;
-        });
-
+        final Grid<Boolean> structure = Grid.create(w, h, (x, y) -> true);
 
         // non-sensing body made of 2 materials
         Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (x, y) -> {
            if (structure.get(x, y)) {
-               if ((y == 3) && (x < 6) && (x > 0)) {
+               if (y == 0) {
                    return SerializationUtils.clone(hardMaterial);
                } else {
                    return SerializationUtils.clone(softMaterial);
@@ -129,6 +109,7 @@ public class LabTeaching {
                 return null;
             }
         });
+
 
         /*
         ##################
@@ -219,13 +200,18 @@ public class LabTeaching {
         // configure the viewer
         GridOnlineViewer gridOnlineViewer = new GridOnlineViewer(
                 Grid.create(1, 1, "Simulation"),
-                uiExecutor
+                uiExecutor,
+                GraphicsDrawer.build().setConfigurable("drawers", List.of(
+                        it.units.erallab.hmsrobots.viewers.drawers.Robot.build(),
+                        it.units.erallab.hmsrobots.viewers.drawers.Voxel.build(),
+                        it.units.erallab.hmsrobots.viewers.drawers.Ground.build()
+                ))
         );
         // set the delay from the simulation to the viewer
-        gridOnlineViewer.start(5);
+        gridOnlineViewer.start(0);
         // run the simulations
         GridEpisodeRunner<Robot<?>> runner = new GridEpisodeRunner<>(
-                Grid.create(1, 1, Pair.of("Robot", distributedRobot)),
+                Grid.create(1, 1, Pair.of("Robot", robot)),
                 locomotion,
                 gridOnlineViewer,
                 executor
