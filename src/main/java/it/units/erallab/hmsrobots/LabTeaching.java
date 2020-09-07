@@ -132,28 +132,28 @@ public class LabTeaching {
 
         /*
         ##################
-        ##     MIND     ##
+        ##     BRAIN    ##
         ##################
         */
 
-        // simple mind
-        Controller<ControllableVoxel> mind = new TimeFunctions(
+        // simple brain
+        Controller<ControllableVoxel> brain = new TimeFunctions(
                 Grid.create(w, h, (x, y) -> (Double t) -> Math.sin(-2 * Math.PI * t + Math.PI * ((double) x / (double) w)))
         );
 
-        // building a robot with simple mind and non-sensing body
-        Robot<ControllableVoxel> robot = new Robot<>(mind, body);
+        // building a robot with simple brain and non-sensing body
+        Robot<ControllableVoxel> robot = new Robot<>(brain, body);
 
 
-        // centralized mind
+        // centralized brain
         // create an object holding inputs, outputs, and the controller function
-        CentralizedSensing centralizedMind = new CentralizedSensing(SerializationUtils.clone(sensingBody));
+        CentralizedSensing centralizedBrain = new CentralizedSensing(SerializationUtils.clone(sensingBody));
         // build the MLP architecture
         MultiLayerPerceptron mlp = new MultiLayerPerceptron(
                 MultiLayerPerceptron.ActivationFunction.RELU,
-                centralizedMind.nOfInputs(),
+                centralizedBrain.nOfInputs(),
                 new int[0], // hidden layers
-                centralizedMind.nOfOutputs()
+                centralizedBrain.nOfOutputs()
         );
         double[] ws = mlp.getParams();
         Random random = new Random();
@@ -162,33 +162,33 @@ public class LabTeaching {
         // set the MLP parameters
         mlp.setParams(ws);
         // set the MLP as controller function
-        centralizedMind.setFunction(mlp);
+        centralizedBrain.setFunction(mlp);
 
-        // building a robot with centralized mind and sensing body
-        Robot<SensingVoxel> centralizedRobot = new Robot(centralizedMind, SerializationUtils.clone(sensingBody));
+        // building a robot with centralized brain and sensing body
+        Robot<SensingVoxel> centralizedRobot = new Robot(centralizedBrain, SerializationUtils.clone(sensingBody));
 
 
-        // distributed mind
-        DistributedSensing distributedMind = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
+        // distributed brain
+        DistributedSensing distributedBrain = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
         // iterate over each voxel
         for (Grid.Entry<SensingVoxel> entry : sensingBody) {
             // build a MLP for each voxel
             MultiLayerPerceptron localMlp = new MultiLayerPerceptron(
                     MultiLayerPerceptron.ActivationFunction.RELU,
-                    distributedMind.nOfInputs(entry.getX(), entry.getY()),
+                    distributedBrain.nOfInputs(entry.getX(), entry.getY()),
                     new int[0], // hidden layers
-                    distributedMind.nOfOutputs(entry.getX(), entry.getY())
+                    distributedBrain.nOfOutputs(entry.getX(), entry.getY())
             );
             //  randomly sample the parameters of each MLP from a gaussian distribution
             double[] localWs = mlp.getParams();
             IntStream.range(0, localWs.length).forEach(i -> localWs[i] = random.nextGaussian());
             localMlp.setParams(localWs);
             // update the distributed controller with each MLP
-            distributedMind.getFunctions().set(entry.getX(), entry.getY(), localMlp);
+            distributedBrain.getFunctions().set(entry.getX(), entry.getY(), localMlp);
         }
 
-        // building a robot with distributed mind and sensing body
-        Robot<SensingVoxel> distributedRobot = new Robot<>(distributedMind, SerializationUtils.clone(sensingBody));
+        // building a robot with distributed brain and sensing body
+        Robot<SensingVoxel> distributedRobot = new Robot<>(distributedBrain, SerializationUtils.clone(sensingBody));
 
         /*
         ##################
