@@ -1,28 +1,26 @@
 # Soft Robots
 
-<div>
-    <div class="inline-block">
-        <img src="/assets/octopus.jpg" alt="octopus" width="300"/>
-    </div>
-    <div class="inline-block">
-        <img src="/assets/grasp.jpg" alt="grasping" width="300"/>
-    </div>
+Phisical robots
+
+<div style="float: left; width: 50%; padding: 5px;">
+  <div>
+    <img src="/assets/octopus.jpg" alt="octopus" width="400" height="300"/>
+  </div>
+  <div>
+    <img src="/assets/grasp.jpg" alt="grasping" width="400" height="300"/>
+  </div>
 </div>
 
-<div>
-    <div class="inline-block">
-        <img src="/assets/evolution.png" alt="evolution" width="300"/>
-    </div>
-    <div class="inline-block">
-        <img src="/assets/tinyspace.jpg" alt="tiny space" width="300"/>
-    </div>
+Simulated robots
+
+<div style="float: left; width: 50%; padding: 5px;">
+  <div padding: 5px;>
+    <img src="/assets/evolution.png" alt="evolution" width="400" height="300"/>
+  </div>
+  <div padding: 5px;>
+    <img src="/assets/tinyspace.jpg" alt="tiny space" width="400" height="300"/>
+  </div>
 </div>
-
-
-
-
-
-
 
 
 > Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
