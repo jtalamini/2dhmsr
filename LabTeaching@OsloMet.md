@@ -29,7 +29,7 @@ java --version
 
 2. Download and install [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/download).
 
-3. From IntelliJ main menu navigate to: *File > New Project from Version Control > Git* and enter URL: https://github.com/jtalamini/2dhmsr
+3. From IntelliJ main menu navigate to: *Check out from Version Control > Git* and enter URL: https://github.com/jtalamini/2dhmsr
 
 4. Make sure the latest JDK version is used in the project: *File > Project Structure > Project > Project SDK*
 
