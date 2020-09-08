@@ -1,54 +1,11 @@
 # Soft Robots
 
 <div class="row">
-<a href=https://youtu.be/EXuR_soDnFo>
-<img src="https://github.com/skriegman/img/blob/master/nick.png" height="135" width="135">
-</a>
-
-<a href=https://youtu.be/HgWQ-gPIvt4>
-<img src="https://github.com/skriegman/img/blob/master/electro.png" height="135" width="135">
-</a>
-
-<a href=https://youtu.be/4ZqdvYrZ3ro>
-<img src="https://github.com/skriegman/img/blob/master/swimming.png" height="135" width="135">
-</a>
-
-<a href=https://youtu.be/Cw2SwPNwcfM>
-<img src="https://github.com/skriegman/img/blob/master/plant1.png" height="135" width="135">
-</a>
-
-<a href=https://youtu.be/XqIUJcuOgmw>
-<img src="https://github.com/skriegman/img/blob/master/teeth1.png" height="135" width="135">
-</a>
-
-<a href=https://youtu.be/r_SL8VUt-wA>
-<img src="https://github.com/skriegman/img/blob/master/cage.png" height="135" width="135">
-</a>
-
+  <img src="/assets/octopus.jpg" height="135" width="135">
+  <img src="/assets/grasp.jpg" height="135" width="135">
+  <img src="/assets/evolution.png" height="135" width="135">
+  <img src="/assets/tinyspace.jpg" height="135" width="135">
 </div>
-
-Phisical robots
-
-<div style="float: left; width: 50%; padding: 5px;">
-  <div>
-    <img src="/assets/octopus.jpg" alt="octopus" width="400" height="300"/>
-  </div>
-  <div>
-    <img src="/assets/grasp.jpg" alt="grasping" width="400" height="300"/>
-  </div>
-</div>
-
-Simulated robots
-
-<div style="float: left; width: 50%; padding: 5px;">
-  <div padding: 5px;>
-    <img src="/assets/evolution.png" alt="evolution" width="400" height="300"/>
-  </div>
-  <div padding: 5px;>
-    <img src="/assets/tinyspace.jpg" alt="tiny space" width="400" height="300"/>
-  </div>
-</div>
-
 
 > Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
 > This potential comes at the cost of a larger design effort required by this robot, both in its controller (brain) and its shape (body). 
