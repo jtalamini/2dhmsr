@@ -1,10 +1,10 @@
 # Soft Robots
 
 <div class="row">
-  <img src="/assets/octopus.jpg" height="135" width="135">
-  <img src="/assets/grasp.jpg" height="135" width="135">
-  <img src="/assets/evolution.png" height="135" width="135">
-  <img src="/assets/tinyspace.jpg" height="135" width="135">
+  <img src="/assets/octopus.jpg" height="135" width="140">
+  <img src="/assets/grasp.jpg" height="135" width="140">
+  <img src="/assets/evolution.png" height="135" width="140">
+  <img src="/assets/tinyspace.jpg" height="135" width="140">
 </div>
 
 > Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
