@@ -1,5 +1,13 @@
 # Soft Robots
 
+<img src="/assets/octopus.jpg" alt="octopus" width="300"/>
+
+<img src="/assets/grasp.jpg" alt="grasping" width="300"/>
+
+<img src="/assets/evolution.png" alt="evolution" width="300"/>
+
+<img src="/assets/tinyspace.jpg" alt="tiny space" width="300"/>
+
 > Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
 > This potential comes at the cost of a larger design effort required by this robot, both in its controller (brain) and its shape (body). 
 > For this reason, optimization, possibly by means of meta-heuristics, is an effective way to address the design of soft robots.
