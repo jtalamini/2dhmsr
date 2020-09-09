@@ -8,16 +8,16 @@
 </div>
 
 - Soft Robots realizations
-- Physical
-  - 3D printable
-  - Soft materials availability
-  - Phisical constraints
-  - ...
-- Simulated
-  - Voxel-based
-    - 3D simulators
-    - 2D simulators
-  - ...
+  - Physical
+    - 3D printable
+    - Soft materials availability
+    - Phisical constraints
+    - ...
+  - Simulated
+    - Voxel-based
+      - 3D simulators
+      - 2D simulators
+    - ...
 
 - Why soft-robots?
   - Safe robot-human interactions
