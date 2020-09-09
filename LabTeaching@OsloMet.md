@@ -1,5 +1,14 @@
 # Soft Robots
 
+> Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
+> This potential comes at the cost of a larger design effort required by this robot, both in its controller (brain) and its shape (body). 
+> For this reason, optimization, possibly by means of meta-heuristics, is an effective way to address the design of soft robots.
+>
+<cite>[Design, Validation, and Case Studies of 2D-VSR-Sim, an Optimization-friendly
+Simulator of 2-D Voxel-based Soft Robots][1]</cite>
+
+[1]: https://arxiv.org/pdf/2001.08617.pdf
+
 <div class="row">
   <img src="/assets/octopus.jpg" height="135" width="140">
   <img src="/assets/grasp.jpg" height="135" width="140">
@@ -29,15 +38,6 @@
     - rescue robots
     - oceanic exploration
     - ...
-
-> Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
-> This potential comes at the cost of a larger design effort required by this robot, both in its controller (brain) and its shape (body). 
-> For this reason, optimization, possibly by means of meta-heuristics, is an effective way to address the design of soft robots.
->
-<cite>[Design, Validation, and Case Studies of 2D-VSR-Sim, an Optimization-friendly
-Simulator of 2-D Voxel-based Soft Robots][1]</cite>
-
-[1]: https://arxiv.org/pdf/2001.08617.pdf
 
 # Installation
 
