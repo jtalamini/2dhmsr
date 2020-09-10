@@ -255,13 +255,13 @@ Robot<ControllableVoxel> robot = new Robot<>(brain, body);
 
 A centralized brain is a function that accepts inputs from all the voxels, and actuates them all in a centralized fashion.
 The `CentralizedSensing` object stores inputs, outputs, and the controller function to invoke.
-Specifically, the function to invoke is a `MultiLayerPerceptron` (MLP) with ReLU activation function, and no hidden layers:
+Specifically, the function to invoke is a `MultiLayerPerceptron` (MLP) with hyperbolic tangent as the activation function, and no hidden layers:
 
 ```java
 CentralizedSensing<SensingVoxel> centralizedBrain = new CentralizedSensing<>(SerializationUtils.clone(sensingBody));
 
 MultiLayerPerceptron mlp = new MultiLayerPerceptron(
-       MultiLayerPerceptron.ActivationFunction.RELU,
+       MultiLayerPerceptron.ActivationFunction.TANH,
        centralizedBrain.nOfInputs(),
        new int[0], // hidden layers
        centralizedBrain.nOfOutputs()
@@ -299,7 +299,7 @@ A MLP is defined for each voxel, with parameters randomly sampled from a gaussia
 ```java
 for (Grid.Entry<SensingVoxel> entry : sensingBody) {
    MultiLayerPerceptron localMlp = new MultiLayerPerceptron(
-           MultiLayerPerceptron.ActivationFunction.RELU,
+           MultiLayerPerceptron.ActivationFunction.TANH,
            distributedBrain.nOfInputs(entry.getX(), entry.getY()),
            new int[0], // hidden layers
            distributedBrain.nOfOutputs(entry.getX(), entry.getY())
