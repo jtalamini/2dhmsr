@@ -40,7 +40,7 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
 
 # 2dhmsr
 
-2D voxel-based simulator that allows:
+2D voxel-based simulator:
 
 - Easy to use (and to extend)
 - Highly customizable options for robots:
