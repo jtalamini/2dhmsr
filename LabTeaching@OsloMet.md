@@ -287,7 +287,7 @@ Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedBrain, Serializati
 ### Distributed Brain
 
 A distributed brain is a grid of functions, each of them accepting inputs from part of the body, and actuating it in a distributed fashion.
-The `DistributedSensing` object that stores inputs, outputs, and the grid of functions to invoke.
+The `DistributedSensing` object (as in the centralized brain) stores inputs, outputs, and the grid of functions to invoke.
 
 ```java
 DistributedSensing distributedBrain = new DistributedSensing(SerializationUtils.clone(sensingBody), 1);
