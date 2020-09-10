@@ -319,6 +319,8 @@ Robot<SensingVoxel> distributedRobot = new Robot<>(distributedBrain, Serializati
 
 ## Task
 
+The task is the porpuse toward which the robot behaviour is evaluated.
+
 A locomotion task is defined by the following constructor:
 
 ```java
