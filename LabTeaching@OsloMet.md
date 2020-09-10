@@ -38,7 +38,18 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
     - oceanic exploration
     - ...
 
-# Installation
+# 2dhmsr
+
+2D voxel-based simulator that allows:
+
+- Easy to use (and to extend)
+- Highly customizable options for robots:
+  - Body (custom voxel materials, many sensors implemented)
+  - Brain (custom controllers, neural networks, distributed/centralized controllers)
+- Debug using GUI
+- ...
+
+## Installation
 
 1. This project requires Java Development Kit (JDK) version 14.
 Download the latest JDK from [here](https://www.oracle.com/java/technologies/javase-downloads.html).
