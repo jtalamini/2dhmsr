@@ -16,19 +16,17 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
   <img src="/assets/tinyspace.jpg" height="135" width="140">
 </div>
 
-- Soft Robots realizations
+- Realizations
   - Physical
     - 3D printable
-    - Soft materials availability
-    - Phisical constraints
+    - Soft materials
+    - Manufacture
     - ...
   - Simulated
-    - Voxel-based
-      - 3D simulators
-      - 2D simulators
+    - 2D Voxel-based
     - ...
 
-- Why soft-robots?
+- Applications
   - Safe robot-human interactions
     - surgical operations
     - exosuits for rehabilitation
