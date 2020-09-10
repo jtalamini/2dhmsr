@@ -12,6 +12,7 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
 <div class="row">
   <img src="/assets/octopus.jpg" height="135" width="140">
   <img src="/assets/grasp.jpg" height="135" width="140">
+  <img src="/assets/grow.jpg" height="135" width="140">
   <img src="/assets/evolution.png" height="135" width="140">
   <img src="/assets/tinyspace.jpg" height="135" width="140">
 </div>
