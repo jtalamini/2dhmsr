@@ -66,7 +66,9 @@ java --version
 
 4. Make sure the latest JDK version is used in the project: *File > Project Structure > Project > Project SDK*
 
-Note: The following code can be found in *src/main/java/it/units/erallab/hmsrobots/LabTeaching.java*.
+The following code can be found in *src/main/java/it/units/erallab/hmsrobots/LabTeaching.java*.
+
+Check out the original repository at: https://github.com/ericmedvet/2dhmsr
 
 # Voxel
 
