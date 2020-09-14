@@ -1,4 +1,4 @@
-# 2D Soft Robotic Simulator
+# 2D Soft Robotics Simulator
 
 ## Soft Robots
 
