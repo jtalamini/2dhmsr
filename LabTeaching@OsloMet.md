@@ -1,4 +1,6 @@
-# Soft Robots
+# 2D Soft Robotic Simulator
+
+## Soft Robots
 
 > Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
 > This potential comes at the cost of a larger design effort required by this robot, both in its controller (brain) and its shape (body). 
@@ -38,20 +40,9 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
     - oceanic exploration
     - ...
 
-# 2dhmsr
-
-2D voxel-based simulator:
-
-- Easy to use (and to extend)
-- Highly customizable options for robots:
-  - Body (custom voxel materials, many sensors implemented)
-  - Brain (custom controllers, neural networks, distributed/centralized controllers)
-- Debug using GUI
-- ...
-
 ## Installation
 
-1. This project requires Java Development Kit (JDK) version 14.
+1. This simulator requires Java Development Kit (JDK) version 14.
 Download the latest JDK from [here](https://www.oracle.com/java/technologies/javase-downloads.html).
 
 Check the installed version of Java:
@@ -70,7 +61,7 @@ The following code can be found in *src/main/java/it/units/erallab/hmsrobots/Lab
 
 Check out the original repository at: https://github.com/ericmedvet/2dhmsr
 
-# Voxel
+## Voxel
 
 <img src="/assets/voxel.png" alt="voxel" width="300"/>
 
@@ -149,7 +140,7 @@ final ControllableVoxel softMaterialVoxel = new ControllableVoxel(
 );
 ```
 
-# Robot
+## Robot
 
 Robots = Body + Brain
 - Body = some voxels assembly that can be actuated:
@@ -159,7 +150,7 @@ Robots = Body + Brain
   - Centralized brain
   - Distributed brain
 
-## Body
+### Body
 
 This is a **7x4** grid of voxel, used to create the following "biped" robot:
 
@@ -180,7 +171,7 @@ int h = 4;
 
 final Grid<Boolean> structure = Grid.create(w, h, (x, y) -> (x < 2) || (x > 5) || (y > 0));
 ```
-### Non-sensing Body
+#### Non-sensing Body
 
 The following body is created according to the structure, using 2 different voxel materials:
 
@@ -198,7 +189,7 @@ Grid<ControllableVoxel> body = Grid.create(structure.getW(), structure.getH(), (
 });
 ```
 
-### Sensing Body
+#### Sensing Body
 
 It is also possible to create a robot with the ability to sense the environment.
 The sensing equipment for each voxel can be selected among a wide range of sensors.
@@ -224,9 +215,9 @@ Sensors:
 * `Touch`: return true if its belonging voxel is touching another object (which is not part of the robot), otherwise return false.
 * ...
 
-## Brain
+### Brain
 
-### Simple Brain
+#### Simple Brain
 
 The brain is an implementation of the `Controller` interface.
 A simple brain, based on a non-sensing body, can be defined using the `TimeFunction` constructor:
@@ -265,7 +256,7 @@ Building the robot:
 Robot<ControllableVoxel> robot = new Robot<>(brain, body);
 ```
 
-### Centralized Brain
+#### Centralized Brain
 
 A centralized brain is a function that accepts inputs from all the voxels, and actuates them all in a centralized fashion.
 The `CentralizedSensing` object stores inputs, outputs, and the controller function to invoke.
@@ -298,7 +289,7 @@ Building the robot:
 Robot<SensingVoxel> centralizedRobot = new Robot<>(centralizedBrain, SerializationUtils.clone(sensingBody));
 ```
 
-### Distributed Brain
+#### Distributed Brain
 
 A distributed brain is a grid of functions, each of them accepting inputs from part of the body, and actuating it in a distributed fashion.
 The `DistributedSensing` object (as in the centralized brain) stores inputs, outputs, and the grid of functions to invoke.
@@ -396,6 +387,23 @@ GridEpisodeRunner<Robot<?>> runner = new GridEpisodeRunner<>(
 );
 runner.run();
 ```
+
+## Summary
+
+Pros:
+
+- Easy to use (and easy to customize)
+- Many options for robots:
+  - Body (custom voxel materials, many sensors implemented)
+  - Brain (custom controllers, neural networks, distributed/centralized controllers)
+- Debug through GUI
+- ...
+
+Cons:
+
+- 2D only simulations
+- Computational (in)efficiency
+- ...
 
 ## Examples
 
