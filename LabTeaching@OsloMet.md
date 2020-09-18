@@ -1,5 +1,11 @@
 # 2D Soft Robotics Simulator
 
+Soft robots are increasingly more relevant to roboticists and researchers because their properties make them succeed at tasks in which traditional robots often fail, and therefore they are viewed as a promising technology.
+On the other side, their complexity with respect to traditional robots make the search for the optimal behavior or the optimal shape of these robots an interesting challenge for the researchers.
+This is meant to be an introduction to the 2D soft robotics simulator developed by ERALLAB team at University of Trieste.
+Specifically, this simulator focus on the soft robots made of voxels, which are simple blocks that can change their area when controlled by an external signal.
+We are going to see how this simulator can be used to create custom robots, and to simulate their behavior through samples of code and examples.
+
 ## Soft Robots
 
 > Soft robots may be able to perform tasks which are hard for rigid robots, thanks to their soft nature which gives them “infinite degrees of freedom”. 
@@ -31,13 +37,13 @@ Simulator of 2-D Voxel-based Soft Robots][1]</cite>
 
 - Applications
   - Safe robot-human interactions
-    - surgical operations
-    - exosuits for rehabilitation
-    - enhancing human strength
+    - Surgical operations
+    - Exosuits for rehabilitation
+    - Enhancing human strength
     - ...
   - Adaptation within dynamic environment
-    - rescue robots
-    - oceanic exploration
+    - Rescue robots
+    - Oceanic exploration
     - ...
 
 ## Installation
